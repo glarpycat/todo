@@ -1,0 +1,6 @@
+node_modules/
+.next/
+
+# Python virtual environment
+.venv/
+*.pyc

@@ -4,11 +4,11 @@
 
 ## 🚀 機能
 
-- ✅ タスクの追加
-- ✅ タスクの完了/未完了切り替え
-- ✅ タスクの削除
-- ✅ リアルタイムでのUI更新
-- ✅ レスポンシブデザイン
+- タスクの追加
+- タスクの完了/未完了切り替え
+- タスクの削除
+- リアルタイムでのUI更新
+- レスポンシブデザイン
 
 ## 🛠️ 技術スタック
 
@@ -69,7 +69,7 @@ todo/
 
    ```bash
    # Python仮想環境の作成（推奨）
-   python -m venv venv
+   python -m venv .venv
    # Windows
    .\venv\Scripts\activate
    # macOS/Linux
@@ -184,15 +184,3 @@ npx playwright test
 ## 📄 ライセンス
 
 このプロジェクトはMITライセンスの下で公開されています。
-
-## 🤝 貢献
-
-1. このリポジトリをフォーク
-2. 機能ブランチを作成 (`git checkout -b feature/AmazingFeature`)
-3. 変更をコミット (`git commit -m 'Add some AmazingFeature'`)
-4. ブランチをプッシュ (`git push origin feature/AmazingFeature`)
-5. Pull Requestを作成
-
-## 📞 サポート
-
-問題や質問がある場合は、GitHubのIssuesページでお気軽にお知らせください。

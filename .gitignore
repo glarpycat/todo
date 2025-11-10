@@ -4,3 +4,6 @@ node_modules/
 # Python virtual environment
 .venv/
 *.pyc
+
+# documentation build
+site/

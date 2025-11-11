@@ -25,18 +25,21 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
       - name: Set up uv
         uses: astral-sh/setup-uv@v1
-        with:
-          python-version: "3.12"
 
       - name: Sync Python dependencies
         working-directory: backend
-        run: uv sync --locked --group dev --project ./backend/pyproject.toml
+        run: uv sync --locked --group dev
 
       - name: Build static site
         working-directory: backend
-        run: uv run --locked --group dev mkdocs build --strict --config-file ./mkdocs.yml
+        run: uv run --locked --group dev mkdocs build --strict --config-file ../mkdocs.yml
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3

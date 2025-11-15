@@ -4,7 +4,6 @@ on:
   pull_request:
     types:
       - labeled
-  workflow_dispatch:
 
 permissions:
   contents: read
@@ -23,8 +22,7 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     if: >-
-      ${{ github.event_name != 'pull_request' ||
-          github.event.label.name == 'running mkdocs build ...' }}
+      ${{ github.event.label.name == vars.TRIGGER_LABEL_DOC_BUILD }}
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
@@ -63,4 +61,4 @@ jobs:
         if: always()
         uses: actions-ecosystem/action-remove-labels@v1
         with:
-          labels: ${{ vars.TRIGGER_LABEL }}
+          labels: ${{ vars.TRIGGER_LABEL_DOC_BUILD }}

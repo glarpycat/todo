@@ -1,17 +1,15 @@
-# Welcome to MkDocs
+# Todo プロジェクトドキュメント
 
-For full documentation visit [mkdocs.org](https://www.mkdocs.org).
+このサイトでは Todo アプリケーションの主要なコンセプトや開発方法をまとめています。軽量な Flask API と Next.js フロントエンドを組み合わせ、ローカルで完結するシンプルなフルスタック構成を実現しています。
 
-## Commands
+## リポジトリ構成
 
-* `mkdocs new [dir-name]` - Create a new project.
-* `mkdocs serve` - Start the live-reloading docs server.
-* `mkdocs build` - Build the documentation site.
-* `mkdocs -h` - Print help message and exit.
+- `backend/`: Todo アイテム向け CRUD エンドポイントを提供する Flask サービスと、pytest ベースの API テスト。
+- `frontend/`: バックエンド API を利用して UI を描画する Next.js 14（App Router）プロジェクト。
+- `docs/`: 本ページを含む MkDocs 用ドキュメントソース。ビルドすると `site/` に静的サイトが生成されます。
 
-## Project layout
+## 次に読むもの
 
-    mkdocs.yml    # The configuration file.
-    docs/
-        index.md  # The documentation homepage.
-        ...       # Other markdown pages, images and other files.
+- 実行時構成やデータフローについて詳しくは [アーキテクチャ](architecture.md) を参照してください。
+- 利用している言語・フレームワーク・ツールチェーンの全体像は [技術スタック](tech-stack.md) にまとめています。
+- 実装詳細を確認したい場合は、バックエンド・フロントエンドの各ソースコードやテストを読み進めてください。

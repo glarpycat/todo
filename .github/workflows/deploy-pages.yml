@@ -47,8 +47,7 @@ jobs:
         run: uv sync --locked
 
       - name: Build static site
-        working-directory: backend
-        run: uv run --locked mkdocs build --strict --config-file ../mkdocs.yml
+        run: uv run --locked mkdocs build --strict --config-file ./mkdocs.yml
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
@@ -60,7 +59,6 @@ jobs:
         uses: actions/deploy-pages@v4
 
       - name: Remove preview label
-        if: ${{ github.event.action == 'labeled' }}
         uses: actions-ecosystem/action-remove-labels@v1
         with:
           labels: ${{ env.PREVIEW_LABEL }}

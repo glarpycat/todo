@@ -24,7 +24,7 @@ jobs:
     runs-on: ubuntu-latest
     if: >-
       ${{ github.event_name != 'pull_request' ||
-          github.event.label.name == vars.TRIGGER_LABEL }}
+          github.event.label.name == 'running mkdocs build ...' }}
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}

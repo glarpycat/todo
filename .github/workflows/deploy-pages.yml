@@ -4,7 +4,6 @@ on:
   pull_request:
     types:
       - labeled
-  workflow_dispatch:
 
 permissions:
   contents: read
@@ -23,8 +22,7 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     if: >-
-      ${{ github.event_name != 'pull_request' ||
-          github.event.label.name == 'running mkdocs build ...' }}
+      ${{ github.event.label.name == vars.TRIGGER_LABEL_DOC_BUILD }}
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
@@ -48,7 +46,7 @@ jobs:
 
       - name: Build static site
         working-directory: backend
-        run: uv run --locked mkdocs build --strict --config-file ../mkdocs.yml
+        run: uv run mkdocs build --strict --config-file ../mkdocs.yml
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
@@ -60,7 +58,7 @@ jobs:
         uses: actions/deploy-pages@v4
 
       - name: Remove preview label
-        if: ${{ github.event.action == 'labeled' }}
+        if: always()
         uses: actions-ecosystem/action-remove-labels@v1
         with:
-          labels: ${{ env.PREVIEW_LABEL }}
+          labels: ${{ vars.TRIGGER_LABEL_DOC_BUILD }}

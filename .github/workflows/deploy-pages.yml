@@ -24,7 +24,7 @@ jobs:
     runs-on: ubuntu-latest
     if: >-
       ${{ github.event_name != 'pull_request' ||
-          github.event.label.name == 'running mkdocs build ...' }}
+          github.event.label.name == vars.TRIGGER_LABEL }}
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
@@ -63,4 +63,4 @@ jobs:
         if: always()
         uses: actions-ecosystem/action-remove-labels@v1
         with:
-          labels: ${{ env.PREVIEW_LABEL }}
+          labels: ${{ vars.TRIGGER_LABEL }}

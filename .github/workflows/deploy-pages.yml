@@ -60,6 +60,7 @@ jobs:
         uses: actions/deploy-pages@v4
 
       - name: Remove preview label
+        if: always()
         uses: actions-ecosystem/action-remove-labels@v1
         with:
           labels: ${{ env.PREVIEW_LABEL }}

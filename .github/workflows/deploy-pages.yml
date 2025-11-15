@@ -1,29 +1,35 @@
 name: Deploy GitHub Pages
 
 on:
-  push:
-    branches:
-      - main
+  pull_request:
+    types:
+      - labeled
   workflow_dispatch:
 
 permissions:
   contents: read
+  issues: write
   pages: write
   id-token: write
 
 concurrency:
-  group: github-pages
+  group: github-pages-${{ github.head_ref || github.ref }}
   cancel-in-progress: true
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    if: >-
+      ${{ github.event_name != 'pull_request' ||
+          github.event.label.name == 'running mkdocs build ...' }}
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.ref }}
 
       - name: Set up Python
         uses: actions/setup-python@v5
@@ -49,3 +55,9 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
+
+      - name: Remove preview label
+        if: ${{ github.event.action == 'labeled' }}
+        uses: actions-ecosystem/action-remove-labels@v1
+        with:
+          labels: running mkdocs build ...

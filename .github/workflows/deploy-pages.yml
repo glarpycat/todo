@@ -47,7 +47,8 @@ jobs:
         run: uv sync --locked
 
       - name: Build static site
-        run: uv run mkdocs build --strict --config-file ./mkdocs.yml
+        working-directory: backend
+        run: uv run mkdocs build --strict --config-file ../mkdocs.yml
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3

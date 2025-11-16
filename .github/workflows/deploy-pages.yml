@@ -44,12 +44,12 @@ jobs:
 
       - name: Build static site
         working-directory: backend
-        run: uv run mkdocs build --strict --config-file ../mkdocs.yml --site-dir "_site/pr-preview-${{ github.event.pull_request.number }}"
+        run: uv run mkdocs build --strict --config-file ../mkdocs.yml
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: _site
+          path: site
 
   deploy:
     runs-on: ubuntu-latest
@@ -71,7 +71,7 @@ jobs:
             🪄 **プレビューの準備ができました！**
             
             以下のURLから内容を確認できます:
-            ${{ steps.deployment.outputs.page_url }}/pr-preview-${{ github.event.pull_request.number }}
+            ${{ steps.deployment.outputs.page_url }}
 
   cleanup:
     runs-on: ubuntu-latest

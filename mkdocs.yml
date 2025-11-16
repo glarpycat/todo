@@ -9,4 +9,5 @@ theme:
   name: material
 
 plugins:
-    - mermaid2
+  - search
+  - mermaid2

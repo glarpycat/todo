@@ -55,7 +55,7 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: _site
+          path: _site/pr-preview-${{ github.event.pull_request.number }}
 
       - name: Deploy to GitHub Pages
         id: deployment

@@ -50,12 +50,12 @@ jobs:
 
       - name: Build static site
         working-directory: backend
-        run: uv run mkdocs build --strict --config-file ../mkdocs.yml --site-dir ${{ env.PAGE_DIR }}
+        run: uv run mkdocs build --strict --config-file ../mkdocs.yml --site-dir "../_site/pr-preview-${{ github.event.pull_request.number }}"
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: ${{ env.PAGE_DIR }}
+          path: _site
 
       - name: Deploy to GitHub Pages
         id: deployment
@@ -70,7 +70,7 @@ jobs:
             🪄 **プレビューの準備ができました！**
             
             以下のURLから内容を確認できます:
-            ${{ steps.deployment.outputs.page_url }}
+            ${{ steps.deployment.outputs.page_url }}/pr-preview-${{ github.event.pull_request.number }}
 
       - name: Remove preview label
         if: always()

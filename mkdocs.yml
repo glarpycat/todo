@@ -1,6 +1,13 @@
 site_name: Todo プロジェクトドキュメント
 nav:
   - Home: index.md
+  - プロジェクト構成: project-structure.md
   - Architecture: architecture.md
   - 技術スタック: tech-stack.md
   - コーディングガイドライン: coding-guidelines.md
+theme:
+  name: material
+
+plugins:
+  - search
+  - mermaid2

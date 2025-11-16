@@ -44,6 +44,12 @@ Todo プロジェクトで採用している主要技術と選定理由、関連
 - **MkDocs + Material テーマ (導入予定)**: `mkdocs.yml` と `docs/` 配下の Markdown から静的サイトを生成。`mkdocs build` で `site/` に出力。
 - **GitHub**: 単一リポジトリでバックエンド・フロントエンド・ドキュメントを一元管理。
 
+## CI/CD
+
+- **GitHub Actions**: `.github/workflows/` 配下のワークフローで自動ビルド・テスト・デプロイを実行。
+  - **deploy-pages.yml**: MkDocs ドキュメントを GitHub Pages に自動デプロイ。PR ごとにプレビュー環境を生成し、`main` ブランチでは本番環境に公開。
+  - ビルド・デプロイ・クリーンアップの各ジョブに分離し、並行実行とエラーハンドリングを最適化。
+
 ## 開発フロー
 
 1. `uv sync --frozen` を実行して Python 依存をセットアップ（`uv sync --dev` で開発依存も同期）。必要に応じて `uv run <command>` で仮想環境を手動で有効化せずにコマンド実行。

@@ -63,7 +63,7 @@ jobs:
         uses: actions/deploy-pages@v4
 
       - name: Post preview URL to PR comment
-        if: ${{ github.event_name == 'pull_request' }}
+        if: ${{ success() && github.event_name == 'pull_request' }}
         uses: peter-evans/create-or-update-comment@v4
         with:
           issue-number: ${{ github.event.pull_request.number }}

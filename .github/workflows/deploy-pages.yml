@@ -14,22 +14,16 @@ permissions:
   pages: write
   id-token: write
 
-env:
-  PAGE_DIR: /tmp/pages/pr-preview-${{ github.event.pull_request.number }}
-
 concurrency:
   group: github-pages-${{ github.event_name == 'pull_request' && github.event.pull_request.number || github.ref }}
   cancel-in-progress: true
 
 jobs:
-  deploy:
+  build:
     runs-on: ubuntu-latest
     if: >-
       ${{ github.event_name != 'pull_request' ||
           github.event.label.name == vars.TRIGGER_LABEL_DOC_BUILD }}
-    environment:
-      name: ${{ github.event_name == 'pull_request' && format('github-pages-preview-pr-{0}', github.event.pull_request.number) || 'github-pages' }}
-      url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -57,12 +51,19 @@ jobs:
         with:
           path: _site
 
+  deploy:
+    runs-on: ubuntu-latest
+    needs: build
+    environment:
+      name: ${{ github.event_name == 'pull_request' && format('github-pages-preview-pr-{0}', github.event.pull_request.number) || 'github-pages' }}
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
 
       - name: Post preview URL to PR comment
-        if: success()
+        if: ${{ github.event_name == 'pull_request' }}
         uses: peter-evans/create-or-update-comment@v4
         with:
           issue-number: ${{ github.event.pull_request.number }}
@@ -72,8 +73,12 @@ jobs:
             以下のURLから内容を確認できます:
             ${{ steps.deployment.outputs.page_url }}/pr-preview-${{ github.event.pull_request.number }}
 
+  cleanup:
+    runs-on: ubuntu-latest
+    needs: [build, deploy]
+    if: ${{ always() && github.event_name == 'pull_request' }}
+    steps:
       - name: Remove preview label
-        if: always()
         uses: actions-ecosystem/action-remove-labels@v1
         with:
           labels: ${{ vars.TRIGGER_LABEL_DOC_BUILD }}

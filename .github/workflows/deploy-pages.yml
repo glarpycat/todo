@@ -50,12 +50,12 @@ jobs:
 
       - name: Build static site
         working-directory: backend
-        run: uv run mkdocs build --strict --config-file ../mkdocs.yml --site-dir "../_site/pr-preview-${{ github.event.pull_request.number }}"
+        run: uv run mkdocs build --strict --config-file ../mkdocs.yml --site-dir "_site/pr-preview-${{ github.event.pull_request.number }}"
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: _site/pr-preview-${{ github.event.pull_request.number }}
+          path: _site
 
       - name: Deploy to GitHub Pages
         id: deployment

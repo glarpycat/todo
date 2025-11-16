@@ -15,7 +15,7 @@ permissions:
   id-token: write
 
 env:
-  PREVIEW_LABEL: running mkdocs build ...
+  PAGE_DIR: /tmp/pages/pr-preview-${{ github.event.pull_request.number }}
 
 concurrency:
   group: github-pages-${{ github.head_ref || github.ref }}
@@ -50,12 +50,12 @@ jobs:
 
       - name: Build static site
         working-directory: backend
-        run: uv run mkdocs build --strict --config-file ../mkdocs.yml
+        run: uv run mkdocs build --strict --config-file ../mkdocs.yml --site-dir ${{ env.PAGE_DIR }}
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: site
+          path: ${{ env.PAGE_DIR }}
 
       - name: Deploy to GitHub Pages
         id: deployment

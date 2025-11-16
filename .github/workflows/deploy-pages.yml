@@ -18,7 +18,7 @@ env:
   PAGE_DIR: /tmp/pages/pr-preview-${{ github.event.pull_request.number }}
 
 concurrency:
-  group: github-pages-${{ github.head_ref || github.ref }}
+  group: github-pages-${{ github.event_name == 'pull_request' && github.event.pull_request.number || github.ref }}
   cancel-in-progress: true
 
 jobs:
@@ -28,7 +28,7 @@ jobs:
       ${{ github.event_name != 'pull_request' ||
           github.event.label.name == vars.TRIGGER_LABEL_DOC_BUILD }}
     environment:
-      name: ${{ github.event_name == 'pull_request' && 'github-pages-preview' || 'github-pages' }}
+      name: ${{ github.event_name == 'pull_request' && format('github-pages-preview-pr-{0}', github.event.pull_request.number) || 'github-pages' }}
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - name: Checkout repository
